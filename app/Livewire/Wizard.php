@@ -4,6 +4,7 @@ namespace App\Livewire;
   
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Tipodocumento;
   
 class Wizard extends Component
 {
@@ -18,7 +19,8 @@ class Wizard extends Component
      */
     public function render()
     {
-        return view('livewire.wizard');
+        $tipodocumentos = Tipodocumento::all(); 
+        return view('livewire.wizard', compact('tipodocumentos'));
     }
   
     /**

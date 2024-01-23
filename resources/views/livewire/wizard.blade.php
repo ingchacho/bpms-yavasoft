@@ -33,10 +33,10 @@
                             </div>
                         </div>
                         <select name="tipodocumento" id="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" >
-                            <option value="">Selecione una opcion</option>
-                            <option value="Cedula de ciudadania">Cedula de ciudadania</option>
-                            <option value="Cedula de extrangeria">Cedula de extrangeria</option>
-                            <option value="Libreta militar">Libreta militar</option>
+                            <option value="">Selecione una opcion</option>         
+                            @foreach ($tipodocumentos as $tipodocumento)
+                                <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                            @endforeach                   
                         </select>
                         {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                         @include('alerts.feedback', ['field' => 'tipodocumento'])

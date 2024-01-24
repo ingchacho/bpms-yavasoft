@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('celular');
             // informacion del servicio solicitado 
             $table->string('tipoatencion');
-            $table->string('ennombre');
+            $table->string('encalidad');
             $table->string('numerodocumentorp')->nullable();
             $table->string('nombresrp')->nullable();
             $table->string('apellidosrp')->nullable();

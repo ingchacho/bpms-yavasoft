@@ -16,16 +16,15 @@ return new class extends Migration
 // informacion personal
             $table->string('tipodocumento');
             $table->string('numerodocumento');
-            $table->string('name');
+            $table->string('nombres');
             $table->string('apellidos');
             $table->string('identidadgenero');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('telefono');
             $table->string('celular');
+            $table->string('estadocivil');
 // informacion de nacimiento
-            $table->integer('dianacimiento');
-            $table->integer('mesnacimiento');
-            $table->integer('anonacimiento');
+            $table->string('fechanacimiento');           
             $table->integer('edad');
             $table->string('paisnacimiento');
             $table->string('departamentonacimiento');

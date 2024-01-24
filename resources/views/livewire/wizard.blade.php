@@ -26,7 +26,7 @@
             </div>
             <div class="stepwizard-step">
                 <a href="#step-5" type="button" class="btn btn-circle {{ $currentStep != 5 ? 'btn-default' : 'btn-primary' }}">5</a>
-                <h5>Información servicio</h5>
+                <h5>Información servicio solicitado</h5>
             </div>
         </div>
     </div>
@@ -158,13 +158,80 @@
                 </div>
             </div>
         </div>
+
         <div class="row setup-content {{ $currentStep != 2 ? 'displayNone' : '' }}" id="step-2">
-            {{-- <div class="col-12">
-                <h3>Información de nacimiento</h3>
-            </div> --}}
-            <div class="col-xs-12">
-                <div class="col-md-12">
-                    {{-- <h3>Información de nacimiento</h3> --}}
+            
+            <div class="col-6">     
+                Fecha de nacimiento (*)       
+                <div class="input-group{{ $errors->has('fechanacimiento') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <input type="date" name="fechanacimiento" class="form-control{{ $errors->has('fechanacimiento') ? ' is-invalid' : '' }}" placeholder="Fecha de nacimiento" value="{{ old('fechanacimiento') }}">
+                    @include('alerts.feedback', ['field' => 'tipodocumento'])
+                    <input type="text" name="edad" class="form-control" placeholder="Edad" value="{{ old('edad') }}" readonly>
+                </div>
+            </div>
+
+            <div class="col-6">            
+                Pais de nacimiento (*)
+                <div class="input-group{{ $errors->has('paisnacimiento') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="paisnacimiento" id="paisnacimiento" class="form-control{{ $errors->has('paisnacimiento') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opcion</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    @include('alerts.feedback', ['field' => 'paisnacimiento'])
+                </div>
+            </div>
+
+            <div class="col-6">            
+                Departamento de nacimiento (*)
+                <div class="input-group{{ $errors->has('departamentonacimiento') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="departamentonacimiento" id="departamentonacimiento" class="form-control{{ $errors->has('departamentonacimiento') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'departamentonacimiento'])
+                </div>
+            </div>
+
+            <div class="col-6">          
+                Municipio de nacimiento (*)  
+                <div class="input-group{{ $errors->has('municipionacimiento') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="municipionacimiento" id="municipionacimiento" class="form-control{{ $errors->has('municipionacimiento') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($municipionacimientos as $municipionacimiento)
+                            <option value="{{ $municipionacimiento->id }}">{{ $municipionacimiento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'municipionacimiento'])
+                </div>
+            </div>
+           
+                {{-- <div class="col-md-12">
                     <div class="form-group">
                         <label for="description">Product Status</label><br/>
                         <label class="radio-inline"><input type="radio" wire:model="status" value="1" {{{ $status == '1' ? "checked" : "" }}}> Active</label>
@@ -178,19 +245,126 @@
                         @error('stock') <span class="error">{{ $message }}</span> @enderror
                     </div>
       
-                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="secondStepSubmit">Next</button>
-                    <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(1)">Back</button>
+                    
+                </div> --}}
+                <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(1)">Atras</button>
+                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="secondStepSubmit">Siguiente</button>
+
+        </div>
+
+        <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
+            <div class="col-6">            
+                Pais de residencia (*)
+                <div class="input-group{{ $errors->has('paisresidencia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="paisresidencia" id="paisresidencia" class="form-control{{ $errors->has('paisresidencia') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opcion</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    @include('alerts.feedback', ['field' => 'paisresidencia'])
                 </div>
             </div>
-        </div>
-        <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
+
+            <div class="col-6">            
+                Departamento de residencia (*)
+                <div class="input-group{{ $errors->has('departamentoresidencia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="departamentoresidencia" id="departamentoresidencia" class="form-control{{ $errors->has('departamentoresidencia') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'departamentoresidencia'])
+                </div>
+            </div>
+
+            <div class="col-6">          
+                Municipio de residencia (*)  
+                <div class="input-group{{ $errors->has('municipioresidencia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="municipioresidencia" id="municipioresidencia" class="form-control{{ $errors->has('municipioresidencia') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($municipionacimientos as $municipionacimiento)
+                            <option value="{{ $municipionacimiento->id }}">{{ $municipionacimiento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'municipioresidencia'])
+                </div>
+            </div>
+
+            <div class="col-6">            
+                Comuna residencia (*)
+                <div class="input-group{{ $errors->has('comunaresidencia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="comunaresidencia" id="comunaresidencia" class="form-control{{ $errors->has('comunaresidencia') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opcion</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    @include('alerts.feedback', ['field' => 'comunaresidencia'])
+                </div>
+            </div>
+
+            <div class="col-6">            
+                Barrio de residencia (*)
+                <div class="input-group{{ $errors->has('barrioresidencia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="barrioresidencia" id="barrioresidencia" class="form-control{{ $errors->has('barrioresidencia') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'barrioresidencia'])
+                </div>
+            </div>
+
+            <div class="col-6">          
+                Dirección residencia (*)  
+                <div class="input-group{{ $errors->has('direccionresidencia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>                  
+                    <input type="text" name="direccionresidencia" class="form-control{{ $errors->has('direccionresidencia') ? ' is-invalid' : '' }}" placeholder="Direccion de residencia" value="{{ old('direccionresidencia') }}">
+                    @include('alerts.feedback', ['field' => 'direccionresidencia'])
+                </div>
+            </div>
             {{-- <div class="col-12">
                 <h3>Información de ubicación</h3>
             </div> --}}
-            <div class="col-xs-12">
-                <div class="col-md-12">
+            {{-- <div class="col-xs-12">
+                <div class="col-md-12"> --}}
                     {{-- <h3>Información de ubicación</h3> --}}
-                    <table class="table">
+                    {{-- <table class="table">
                         <tr>
                             <td>Product Name:</td>
                             <td><strong>{{$name}}</strong></td>
@@ -212,17 +386,111 @@
                             <td><strong>{{$stock}}</strong></td>
                         </tr>
                     </table>
-                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="secondStepSubmit">Next</button>
-                    <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Back</button>
+                    
+                </div>
+            </div> --}}
+            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
+            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="thirdStepSubmit">Siguiente</button>
+        </div>
+        
+        <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-4">
+
+            <div class="col-6">            
+                Nivel academico (*)
+                <div class="input-group{{ $errors->has('nivelacademico') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="nivelacademico" id="nivelacademico" class="form-control{{ $errors->has('nivelacademico') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'nivelacademico'])
                 </div>
             </div>
-        </div>
-        <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-4">
-            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="secondStepSubmit">Next</button>
-            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Back</button>
+            <div class="col-6">            
+                Profesion oficio u ocupación (*)
+                <div class="input-group{{ $errors->has('profesion') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="profesion" id="profesion" class="form-control{{ $errors->has('profesion') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'profesion'])
+                </div>
+            </div>
+            <div class="col-6">            
+                Grupo poblacional (*)
+                <div class="input-group{{ $errors->has('grupopoblacional') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="grupopoblacional" id="grupopoblacional" class="form-control{{ $errors->has('grupopoblacional') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'grupopoblacional'])
+                </div>
+            </div>
+            <div class="col-6">            
+                Etnia (*)
+                <div class="input-group{{ $errors->has('etnia') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="etnia" id="etnia" class="form-control{{ $errors->has('etnia') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'etnia'])
+                </div>
+            </div>
+
+            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Atras</button>
+            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="fourthStepSubmit">Siguiente</button>
         </div>
         <div class="row setup-content {{ $currentStep != 5 ? 'displayNone' : '' }}" id="step-5">
+            <div class="col-12">
+                Actua en calidad de (*)
+                <div class="input-group{{ $errors->has('encalidad') ? ' has-danger' : '' }}">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="tim-icons icon-badge"></i>
+                        </div>
+                    </div>
+                    <select name="encalidad" id="encalidad" class="form-control{{ $errors->has('encalidad') ? ' is-invalid' : '' }}" >
+                        <option value="">Seleccione una opción</option>         
+                        {{-- @foreach ($tipodocumentos as $tipodocumento)
+                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
+                        @endforeach                    --}}
+                    </select>
+                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
+                    @include('alerts.feedback', ['field' => 'encalidad'])
+                </div>
+            </div>
+            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(4)">Atras</button>
             <button class="btn btn-success btn-lg pull-right" wire:click="submitForm" type="button">Finish!</button>
-            <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(4)">Back</button>
         </div>
     </div>

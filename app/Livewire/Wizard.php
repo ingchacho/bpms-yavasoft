@@ -54,6 +54,16 @@ class Wizard extends Component
         $this->currentStep = 3;
     }
   
+    public function thirdStepSubmit()
+    {
+        $this->currentStep = 4;
+    }
+    
+    public function fourthStepSubmit()
+    {
+        $this->currentStep = 5;
+    }
+   
     /**
      * Write code on Method
      *

@@ -50,7 +50,6 @@
         </div>    
     </div>
     <div class="col-3">
-
         <div class="card">
             <div class="card-body">
                 <img src="https://www.creativasesores.com/images/easyblog_articles/33/asesoria-empresas-sevilla-tecnologia.png" alt="">

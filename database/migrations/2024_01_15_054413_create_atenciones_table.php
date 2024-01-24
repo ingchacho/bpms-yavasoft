@@ -16,7 +16,7 @@ return new class extends Migration
             // informacion personal
             $table->string('tipodocumento');
             $table->string('numerodocumento');
-            $table->string('name');
+            $table->string('nombres');
             $table->string('apellidos');
             $table->string('identidadgenero');
             $table->string('email');

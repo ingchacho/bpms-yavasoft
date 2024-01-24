@@ -10,7 +10,7 @@ body{
 .stepwizard {
     display: table;
     width: 100%;
-    position: relative;
+    position: relative; 
 }
 .stepwizard-step button[disabled] {
     opacity: 1 !important;

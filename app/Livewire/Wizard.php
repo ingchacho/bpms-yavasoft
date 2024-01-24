@@ -28,13 +28,13 @@ class Wizard extends Component
      *
      * @return response()
      */
-    public function firstStepSubmit()
+    public function firstStepSubmit()   
     {
-        $validatedData = $this->validate([
-            'name' => 'required|unique:products',
-            'amount' => 'required|numeric',
-            'description' => 'required',
-        ]);
+        // $validatedData = $this->validate([
+        //     'name' => 'required',
+        //     'amount' => 'required|numeric',
+        //     'description' => 'required',
+        // ]);
  
         $this->currentStep = 2;
     }
@@ -46,10 +46,10 @@ class Wizard extends Component
      */
     public function secondStepSubmit()
     {
-        $validatedData = $this->validate([
-            'stock' => 'required',
-            'status' => 'required',
-        ]);
+        // $validatedData = $this->validate([
+        //     'stock' => 'required',
+        //     'status' => 'required',
+        // ]);
   
         $this->currentStep = 3;
     }
@@ -66,7 +66,7 @@ class Wizard extends Component
             'amount' => $this->amount,
             'description' => $this->description,
             'stock' => $this->stock,
-            'status' => $this->status,
+            'status' => $this->status,            
         ]);
   
         $this->successMessage = 'Product Created Successfully.';

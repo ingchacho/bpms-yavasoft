@@ -1,9 +1,9 @@
 <div>
    
     @if(!empty($successMessage))
-    <div class="alert alert-success">
-       {{ $successMessage }}
-    </div>
+        <div class="alert alert-success">
+            {{ $successMessage }}
+        </div>
     @endif
       
     <div class="stepwizard">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-      
+        {{-- inf personal --}}
         <div class="row setup-content {{ $currentStep != 1 ? 'displayNone' : '' }}" id="step-1">    
             {{-- <div class="col-12">
                 <h3>Información Personal</h3>
@@ -158,7 +158,7 @@
                 </div>
             </div>
         </div>
-
+        {{-- inf nacimiento --}}
         <div class="row setup-content {{ $currentStep != 2 ? 'displayNone' : '' }}" id="step-2">
             
             <div class="col-6">     
@@ -251,7 +251,7 @@
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="secondStepSubmit">Siguiente</button>
 
         </div>
-
+        {{-- inf ubicacion --}}
         <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
             <div class="col-6">            
                 Pais de residencia (*)
@@ -392,7 +392,7 @@
             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
             <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="thirdStepSubmit">Siguiente</button>
         </div>
-        
+        {{-- inf caracterizacion --}}
         <div class="row setup-content {{ $currentStep != 4 ? 'displayNone' : '' }}" id="step-4">
 
             <div class="col-6">            
@@ -471,7 +471,9 @@
             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(3)">Atras</button>
             <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="fourthStepSubmit">Siguiente</button>
         </div>
+        {{-- inf servicio --}}
         <div class="row setup-content {{ $currentStep != 5 ? 'displayNone' : '' }}" id="step-5">
+            
             <div class="col-12">
                 Actua en calidad de (*)
                 <div class="input-group{{ $errors->has('encalidad') ? ' has-danger' : '' }}">
@@ -480,17 +482,225 @@
                             <i class="tim-icons icon-badge"></i>
                         </div>
                     </div>
-                    <select name="encalidad" id="encalidad" class="form-control{{ $errors->has('encalidad') ? ' is-invalid' : '' }}" >
+                    <select name="encalidad" id="encalidad" class="form-control{{ $errors->has('encalidad') ? ' is-invalid' : '' }}" onchange="mostrarOcultarCampos1();">
                         <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        <option value="EN NOMBRE PROPIO">EN NOMBRE PROPIO</option>
+                        <option value="AGENTE OFICIOSO">AGENTE OFICIOSO</option>
+                        <option value="REPRESENTANTE LEGAL">REPRESENTANTE LEGAL</option>
                     </select>
                     {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'encalidad'])
                 </div>
             </div>
+            
+            <div class="col-12" id="camposAnonimos" style="display:none;">
+                
+                <div class="col-12">
+                    <div class="input-group{{ $errors->has('numerodocumentorp') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="numerodocumentorp" class="form-control{{ $errors->has('numerodocumentorp') ? ' is-invalid' : '' }}" placeholder="Número de documento" value="{{ old('tipodocumento') }}">
+                        @include('alerts.feedback', ['field' => 'numerodocumentorp'])
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group{{ $errors->has('nombresrp') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="nombresrp" class="form-control{{ $errors->has('nombresrp') ? ' is-invalid' : '' }}" placeholder="Nombres" value="{{ old('nombresrp') }}">
+                        @include('alerts.feedback', ['field' => 'nombresrp'])
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group{{ $errors->has('apellidosrp') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="apellidosrp" class="form-control{{ $errors->has('apellidosrp') ? ' is-invalid' : '' }}" placeholder="Apellidos" value="{{ old('apellidosrp') }}">
+                        @include('alerts.feedback', ['field' => 'apellidosrp'])
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group{{ $errors->has('telefonorp') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="telefonorp" class="form-control{{ $errors->has('telefonorp') ? ' is-invalid' : '' }}" placeholder="Teléfono fijo" value="{{ old('telefonorp') }}">
+                        @include('alerts.feedback', ['field' => 'telefonorp'])
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group{{ $errors->has('celularrp') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="celularrp" class="form-control{{ $errors->has('celularrp') ? ' is-invalid' : '' }}" placeholder="Número Celular" value="{{ old('celularrp') }}">
+                        @include('alerts.feedback', ['field' => 'celularrp'])
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group{{ $errors->has('emailrp') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="email" name="emailrp" class="form-control{{ $errors->has('emailrp') ? ' is-invalid' : '' }}" placeholder="Email" value="{{ old('emailrp') }}">
+                        @include('alerts.feedback', ['field' => 'emailrp'])
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    Copia documento de identidad (*)
+                    <div class="input-group{{ $errors->has('copiacedularp') ? ' has-danger' : '' }}">
+                        <input type="file" name="copiacedularp" class="{{ $errors->has('copiacedularp') ? ' is-invalid' : '' }}">
+                        @include('alerts.feedback', ['field' => 'copiacedularp'])
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12  border"></div>
+                <div class="col-6">
+                    <div class="input-group{{ $errors->has('nombreentidad') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="nombreentidad" class="form-control{{ $errors->has('nombreentidad') ? ' is-invalid' : '' }}" placeholder="Nombre de la entidad que esta vulnerando su derecho (*)" value="{{ old('nombreentidad') }}">
+                        @include('alerts.feedback', ['field' => 'nombreentidad'])
+                    </div>              
+                </div>
+                <div class="col-6">
+                    <div class="input-group{{ $errors->has('ciudaddireccionentidad') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="ciudaddireccionentidad" class="form-control{{ $errors->has('ciudaddireccionentidad') ? ' is-invalid' : '' }}" placeholder="Ciudad y dirección de la entidad que esta vulnerando su derecho (*)" value="{{ old('ciudaddireccionentidad') }}">
+                        @include('alerts.feedback', ['field' => 'ciudaddireccionentidad'])
+                    </div>              
+                </div>
+                <div class="col-6">
+                    <div class="input-group{{ $errors->has('telefonoentidad') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="telefonoentidad" class="form-control{{ $errors->has('telefonoentidad') ? ' is-invalid' : '' }}" placeholder="Télefono de la entidad que esta vulnerando su derecho (*)" value="{{ old('telefonoentidad') }}">
+                        @include('alerts.feedback', ['field' => 'telefonoentidad'])
+                    </div>              
+                </div>
+                <div class="col-6">
+                    <div class="input-group{{ $errors->has('emailentidad') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                
+                        <input type="text" name="emailentidad" class="form-control{{ $errors->has('emailentidad') ? ' is-invalid' : '' }}" placeholder="Email de la entidad que esta vulnerando su derecho (*)" value="{{ old('nombreentidad') }}">
+                        @include('alerts.feedback', ['field' => 'emailentidad'])
+                    </div>              
+                </div>
+
+                <div class="col-12">
+                    Adjunte una copia ampliada del documento de identidad del afectado por ambos lados (*)
+                    <div class="input-group{{ $errors->has('copiadocumentoafectado') ? ' has-danger' : '' }}">
+                        <input type="file" name="copiadocumentoafectado" class="{{ $errors->has('copiadocumentoafectado') ? ' is-invalid' : '' }}">
+                        @include('alerts.feedback', ['field' => 'copiadocumentoafectado'])
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    Ha tramitado una tutela con anterioridad por los hechos planteados (*)
+                    <div class="input-group{{ $errors->has('tutelaanterior') ? ' has-danger' : '' }}">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>
+                        <select name="tutelaanterior" id="tutelaanterior" class="form-control{{ $errors->has('tutelaanterior') ? ' is-invalid' : '' }}" onchange="mostrarOcultarCampos2();" >
+                            <option value="">Seleccione una opción</option>         
+                            <option value="SI">SI</option>
+                            <option value="NO">NO</option>
+                        </select>
+                        @include('alerts.feedback', ['field' => 'tutelaanterior'])
+                    </div>
+                </div>
+
+                <div class="col-12" id="camposAnonimos1" style="display:none;">
+                    <div class="col-12">
+                        Adjunte una copia dela tutela anterior (*)
+                        <div class="input-group{{ $errors->has('copiatutelaanterior') ? ' has-danger' : '' }}">                        
+                            <input type="file" name="copiatutelaanterior" class="{{ $errors->has('copiatutelaanterior') ? ' is-invalid' : '' }}">
+                            @include('alerts.feedback', ['field' => 'copiatutelaanterior'])
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    Resumen de los hechos (*)
+                    <div class="input-group{{ $errors->has('copiatutelaanterior') ? ' has-danger' : '' }}">
+                        {{-- <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tim-icons icon-badge"></i>
+                            </div>
+                        </div>                 --}}
+                        <textarea type="text" wire:model="description" class="form-control" id="taskDescription">{{{ $description ?? '' }}}</textarea>
+                        @include('alerts.feedback', ['field' => 'copiatutelaanterior'])
+                    </div>                  
+                </div>
+
+                <div class="col-12">
+                    Adjunte una copia de las evidencias que soportan los hechos (*):
+                    <div class="input-group{{ $errors->has('copiatutelaanterior') ? ' has-danger' : '' }}">                       
+                        <input type="file" name="copiatutelaanterior" class="{{ $errors->has('copiatutelaanterior') ? ' is-invalid' : '' }}">
+                        @include('alerts.feedback', ['field' => 'copiatutelaanterior'])
+                    </div>
+                </div>
+
             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(4)">Atras</button>
             <button class="btn btn-success btn-lg pull-right" wire:click="submitForm" type="button">Finish!</button>
         </div>
-    </div>
+</div>
+
+
+
+<script>
+    function mostrarOcultarCampos1() {
+        let encalidad = document.getElementById("encalidad");
+        let camposAnonimos = document.getElementById("camposAnonimos");        
+        if (encalidad.value === "EN NOMBRE PROPIO" || encalidad.value === ""){
+            camposAnonimos.style.display = "none";
+        } else {
+            camposAnonimos.style.display = "block";
+        }
+    }
+
+
+    function mostrarOcultarCampos2() {
+        let tutelaanterior = document.getElementById("tutelaanterior");
+        let camposAnonimos1 = document.getElementById("camposAnonimos1");        
+        if (tutelaanterior.value === "NO" || tutelaanterior.value === ""){
+            camposAnonimos1.style.display = "none";
+        } else {
+            camposAnonimos1.style.display = "block";
+        }
+    }
+</script>

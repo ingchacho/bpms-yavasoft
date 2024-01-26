@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('copiacedularp')->nullable();
             //tutela
             $table->string('nombreentidad')->nullable();
-            $table->string('ciudaddireccion')->nullable();
+            $table->string('ciudaddireccionentidad')->nullable();
             $table->string('telefonoentidad')->nullable();
             $table->string('emailentidad')->nullable();
             $table->string('copiadocumentoafectado')->nullable();

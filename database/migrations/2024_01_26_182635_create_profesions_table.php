@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('profesions', function (Blueprint $table) {
             $table->id();
+            $table->integer('ciiu');
+            $table->string('descripcion');
+            $table->integer('estado');
             $table->timestamps();
         });
     }

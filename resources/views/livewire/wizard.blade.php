@@ -94,9 +94,9 @@
                     </div>
                     <select name="identidadgenero" id="identidadgenero" class="form-control{{ $errors->has('identidadgenero') ? ' is-invalid' : '' }}" >
                         <option value="">Identidad de genero (*)</option>         
-                        {{-- @foreach ($identidadgeneros as $identidadgenero)
+                        @foreach ($identidadgeneros as $identidadgenero)
                             <option value="{{ $identidadgenero->id }}">{{ $identidadgenero->descripcion }}</option>
-                        @endforeach                    --}}
+                        @endforeach                   
                     </select>                    
                     @include('alerts.feedback', ['field' => 'identidadgenero'])
                 </div>
@@ -185,9 +185,9 @@
                     </div>
                     <select name="paisnacimiento" id="paisnacimiento" class="form-control{{ $errors->has('paisnacimiento') ? ' is-invalid' : '' }}" >
                         <option value="">Seleccione una opcion</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        @foreach ($pais as $i)
+                            <option value="{{ $i->id }}">{{ $i->nombrepais }}</option>
+                        @endforeach                   
                     </select>
                     @include('alerts.feedback', ['field' => 'paisnacimiento'])
                 </div>
@@ -405,11 +405,10 @@
                     </div>
                     <select name="nivelacademico" id="nivelacademico" class="form-control{{ $errors->has('nivelacademico') ? ' is-invalid' : '' }}" >
                         <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        @foreach ($nivelacademicos as $nivelacademico)
+                            <option value="{{ $nivelacademico->id }}">{{ $nivelacademico->descripcion }}</option>
+                        @endforeach                   
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'nivelacademico'])
                 </div>
             </div>
@@ -423,11 +422,10 @@
                     </div>
                     <select name="profesion" id="profesion" class="form-control{{ $errors->has('profesion') ? ' is-invalid' : '' }}" >
                         <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        @foreach ($profesions as $profesion)
+                            <option value="{{ $profesion->id }}">{{ $profesion->descripcion }}</option>
+                        @endforeach                   
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'profesion'])
                 </div>
             </div>
@@ -441,11 +439,10 @@
                     </div>
                     <select name="grupopoblacional" id="grupopoblacional" class="form-control{{ $errors->has('grupopoblacional') ? ' is-invalid' : '' }}" >
                         <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        @foreach ($poblacions as $poblacion)
+                            <option value="{{ $poblacion->id }}">{{ $poblacion->descripcion }}</option>
+                        @endforeach                   
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'grupopoblacional'])
                 </div>
             </div>
@@ -459,11 +456,10 @@
                     </div>
                     <select name="etnia" id="etnia" class="form-control{{ $errors->has('etnia') ? ' is-invalid' : '' }}" >
                         <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        @foreach ($etnias as $etnia)
+                            <option value="{{ $etnia->id }}">{{ $etnia->descripcion }}</option>
+                        @endforeach                   
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'etnia'])
                 </div>
             </div>

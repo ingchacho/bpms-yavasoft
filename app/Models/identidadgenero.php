@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class identidadgenero extends Model
 {
     use HasFactory;
+    protected $fillable = [
+       'descripcion', 'estado'
+    ];
 }

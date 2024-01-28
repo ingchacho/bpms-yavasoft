@@ -5,6 +5,16 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Tipodocumento;
+use App\Models\identidadgenero;
+use App\Models\nivelacademico;
+use App\Models\profesion;
+use App\Models\poblacion;
+use App\Models\etnia;
+use App\Models\pais;
+
+
+
+
   
 class Wizard extends Component
 {
@@ -20,7 +30,14 @@ class Wizard extends Component
     public function render()
     {
         $tipodocumentos = Tipodocumento::all(); 
-        return view('livewire.wizard', compact('tipodocumentos'));
+        $identidadgeneros = identidadgenero::all(); 
+        $nivelacademicos = nivelacademico::all();     
+        $profesions = profesion::all();     
+        $poblacions = poblacion::all();     
+        $etnias = etnia::all();     
+        $pais = pais::all();     
+        
+        return view('livewire.wizard', compact('tipodocumentos', 'identidadgeneros', 'nivelacademicos', 'profesions', 'poblacions', 'etnias', 'pais'));
     }
   
     /**

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class profesion extends Model
+class departamento extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'ciiu, descripcion', 'estado'
+        'pais_id', 'nombrepais', 'nombredepto', 'estado'
      ];
 }

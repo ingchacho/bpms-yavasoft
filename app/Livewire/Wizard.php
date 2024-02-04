@@ -10,8 +10,10 @@ use App\Models\nivelacademico;
 use App\Models\profesion;
 use App\Models\poblacion;
 use App\Models\etnia;
-use App\Models\pais;
 
+use App\Models\pais;
+use App\Models\departamento;
+use App\Models\ciudades;
 
 
 
@@ -40,6 +42,62 @@ class Wizard extends Component
         return view('livewire.wizard', compact('tipodocumentos', 'identidadgeneros', 'nivelacademicos', 'profesions', 'poblacions', 'etnias', 'pais'));
     }
   
+    public function getDepartamentos($id)
+    {
+        $departamentos = departamento::where('pais_id', $id)->get();
+        return response()->json($departamentos);
+    }
+
+     public function getCiudades($id)
+    {
+        $ciudades = ciudades::where('depto_id', $id)->get();
+        return response()->json($ciudades);
+    }
+
+
+    // public function deptos(Request $request)
+    // {
+    //     if(isset($request->texto)){
+    //         $departamentos = departamento::wherePais_id($request->texto)->get();
+    //         return response()->json(
+    //             [
+    //                 'lista' => $departamentos,
+    //                 'success' => true
+    //             ]
+    //             );
+    //     }else{
+    //         return response()->json(
+    //             [
+    //                 'success' => false
+    //             ]
+    //             );
+
+    //     }
+    // }
+
+    // public function ciudades(Request $request)
+    // {
+    //     if(isset($request->texto)){
+    //         $ciudades = ciudad::whereDepto_id($request->texto)->get();
+    //         return response()->json(
+    //             [
+    //                 'lista' => $ciudades,
+    //                 'success' => true
+    //             ]
+    //             );
+    //     }else{
+    //         return response()->json(
+    //             [
+    //                 'success' => false
+    //             ]
+    //             );
+
+    //     }
+
+    // }
+
+
+
     /**
      * Write code on Method
      *

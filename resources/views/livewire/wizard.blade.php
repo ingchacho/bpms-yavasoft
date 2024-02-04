@@ -5,7 +5,8 @@
             {{ $successMessage }}
         </div>
     @endif
-      
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <div class="stepwizard">
         <div class="stepwizard-row setup-panel">
             <div class="stepwizard-step">
@@ -183,8 +184,8 @@
                             <i class="tim-icons icon-badge"></i>
                         </div>
                     </div>
-                    <select name="paisnacimiento" id="paisnacimiento" class="form-control{{ $errors->has('paisnacimiento') ? ' is-invalid' : '' }}" >
-                        <option value="">Seleccione una opcion</option>         
+                    <select name="paisnacimiento" id="paisnacimiento" class="form-control{{ $errors->has('paisnacimiento') ? ' is-invalid' : '' }}"  onchange="llenardeptos();">
+                        <option value="">Seleccione un pais</option>         
                         @foreach ($pais as $i)
                             <option value="{{ $i->id }}">{{ $i->nombrepais }}</option>
                         @endforeach                   
@@ -202,12 +203,8 @@
                         </div>
                     </div>
                     <select name="departamentonacimiento" id="departamentonacimiento" class="form-control{{ $errors->has('departamentonacimiento') ? ' is-invalid' : '' }}" >
-                        <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        <option value="">Seleccione un departamento</option>                                
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'departamentonacimiento'])
                 </div>
             </div>
@@ -221,12 +218,8 @@
                         </div>
                     </div>
                     <select name="municipionacimiento" id="municipionacimiento" class="form-control{{ $errors->has('municipionacimiento') ? ' is-invalid' : '' }}" >
-                        <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($municipionacimientos as $municipionacimiento)
-                            <option value="{{ $municipionacimiento->id }}">{{ $municipionacimiento->descripcion }}</option>
-                        @endforeach                    --}}
+                        <option value="">Seleccione una ciudad</option>         
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'municipionacimiento'])
                 </div>
             </div>
@@ -280,12 +273,8 @@
                         </div>
                     </div>
                     <select name="departamentoresidencia" id="departamentoresidencia" class="form-control{{ $errors->has('departamentoresidencia') ? ' is-invalid' : '' }}" >
-                        <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        <option value="">Seleccione una opción</option>                                
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'departamentoresidencia'])
                 </div>
             </div>
@@ -299,12 +288,8 @@
                         </div>
                     </div>
                     <select name="municipioresidencia" id="municipioresidencia" class="form-control{{ $errors->has('municipioresidencia') ? ' is-invalid' : '' }}" >
-                        <option value="">Seleccione una opción</option>         
-                        {{-- @foreach ($municipionacimientos as $municipionacimiento)
-                            <option value="{{ $municipionacimiento->id }}">{{ $municipionacimiento->descripcion }}</option>
-                        @endforeach                    --}}
+                        <option value="">Seleccione una opción</option>                               
                     </select>
-                    {{-- <input type="text" name="tipodocumento" class="form-control{{ $errors->has('tipodocumento') ? ' is-invalid' : '' }}" placeholder="Tipo de documento" value="{{ old('tipodocumento') }}"> --}}
                     @include('alerts.feedback', ['field' => 'municipioresidencia'])
                 </div>
             </div>
@@ -675,8 +660,105 @@
             <button class="btn btn-success btn-lg pull-right" wire:click="submitForm" type="button">Finish!</button>
         </div>
 </div>
+<script>
+    $(document).ready(function() 
+    {
+            $('#paisnacimiento').on('change', function() {
+                var pais_id = $(this).val();
+                if(pais_id) {
+                    $.ajax({
+                        url: '/deptos/'+pais_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#departamentonacimiento').empty();
+                            $('#departamentonacimiento').append('<option value="">Seleccione un departamento</option>');
+                            $.each(data, function(index, departamento) {
+                                $('#departamentonacimiento').append('<option value="'+departamento.id+'">'+departamento.nombredepto+'</option>');
+                            });
+                        }
+                    }); 
+                } else {
+                    $('#departamentonacimiento').empty();
+                    $('#municipionacimiento').empty();
+                }
+            });
+
+            // ciudades
+             $('#departamentonacimiento').on('change', function() {
+                var depto_id = $(this).val();
+                if(depto_id) {
+                    $.ajax({
+                        url: '/ciudades/'+depto_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#municipionacimiento').empty();
+                            $('#municipionacimiento').append('<option value="">Seleccione una ciudad</option>');
+                            $.each(data, function(index, ciudad) {
+                                $('#municipionacimiento').append('<option value="'+ciudad.id+'">'+ciudad.nombreciudad+'</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#municipionacimiento').empty();
+                }
+            });
+    });
+    
+</script>
 
 
+
+{{-- 
+<script>
+    const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+    
+    document.getElementById('paisnacimiento').addEventListener('change',(e)=>{
+
+    // function llenardeptos(){
+        alert('ok');
+
+        fetch('deptos',{
+            method : 'POST',
+            body: JSON.stringify({texto : e.target.value}),
+            headers:{
+                'Content-Type': 'application/json',
+                "X-CSRF-Token": csrfToken
+            }
+        }).then(response =>{
+            return response.json()
+        }).then( data =>{
+            var opciones ="<option value=''>Elegir</option>";
+            for (let i in data.lista) {
+               opciones+= '<option value="'+data.lista[i].id+'">'+data.lista[i].nombredepto+'</option>';
+            }
+            document.getElementById("deptos").innerHTML = opciones;
+        }).catch(error =>console.error(error));
+     
+    // }
+        })
+
+    document.getElementById('departamentonacimiento').addEventListener('change',(e)=>{
+        fetch('ciudades',{
+            method : 'POST',
+            body: JSON.stringify({texto : e.target.value}),
+            headers:{
+                'Content-Type': 'application/json',
+                "X-CSRF-Token": csrfToken
+            }
+        }).then(response =>{
+            return response.json()
+        }).then( data =>{
+            var opciones ="<option value=''>Elegir</option>";
+            for (let i in data.lista) {
+               opciones+= '<option value="'+data.lista[i].id+'">'+data.lista[i].nombreciudad+'</option>';
+            }
+            document.getElementById("ciudades").innerHTML = opciones;
+        }).catch(error =>console.error(error));
+    })
+
+</script>    --}}
 
 <script>
     function mostrarOcultarCampos1() {

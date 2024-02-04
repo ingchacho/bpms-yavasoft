@@ -23,6 +23,14 @@ Route::get('wizard', function () {
     return view('default');
 });
 
+
+
+// Route::post('/deptos', [App\Livewire\wizard::class, 'deptos']);
+// Route::post('/ciudades', [App\Livewire\wizard::class, 'ciudades']);
+
+
+Route::get('/deptos/{id}', [wizard::class, 'getDepartamentos']);
+Route::get('/ciudades/{id}', [wizard::class, 'getCiudades']);
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

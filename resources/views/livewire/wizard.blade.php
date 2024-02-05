@@ -170,9 +170,9 @@
                             <i class="tim-icons icon-badge"></i>
                         </div>
                     </div>
-                    <input type="date" name="fechanacimiento" class="form-control{{ $errors->has('fechanacimiento') ? ' is-invalid' : '' }}" placeholder="Fecha de nacimiento" value="{{ old('fechanacimiento') }}">
+                    <input type="date" name="fechaNacimiento" id="fechaNacimiento" onblur="calcularEdad()" class="form-control{{ $errors->has('fechanacimiento') ? ' is-invalid' : '' }}" placeholder="Fecha de nacimiento" value="{{ old('fechanacimiento') }}">
                     @include('alerts.feedback', ['field' => 'tipodocumento'])
-                    <input type="text" name="edad" class="form-control" placeholder="Edad" value="{{ old('edad') }}" readonly>
+                    <input type="text" name="resultadoEdad" id="resultadoEdad" class="form-control" placeholder="Edad" value="{{ old('edad') }}" readonly>
                 </div>
             </div>
 
@@ -256,9 +256,9 @@
                     </div>
                     <select name="paisresidencia" id="paisresidencia" class="form-control{{ $errors->has('paisresidencia') ? ' is-invalid' : '' }}" >
                         <option value="">Seleccione una opcion</option>         
-                        {{-- @foreach ($tipodocumentos as $tipodocumento)
-                            <option value="{{ $tipodocumento->id }}">{{ $tipodocumento->descripcion }}</option>
-                        @endforeach                    --}}
+                        @foreach ($pais as $i)
+                            <option value="{{ $i->id }}">{{ $i->nombrepais }}</option>
+                        @endforeach     
                     </select>
                     @include('alerts.feedback', ['field' => 'paisresidencia'])
                 </div>
@@ -342,38 +342,7 @@
                     <input type="text" name="direccionresidencia" class="form-control{{ $errors->has('direccionresidencia') ? ' is-invalid' : '' }}" placeholder="Direccion de residencia" value="{{ old('direccionresidencia') }}">
                     @include('alerts.feedback', ['field' => 'direccionresidencia'])
                 </div>
-            </div>
-            {{-- <div class="col-12">
-                <h3>Información de ubicación</h3>
-            </div> --}}
-            {{-- <div class="col-xs-12">
-                <div class="col-md-12"> --}}
-                    {{-- <h3>Información de ubicación</h3> --}}
-                    {{-- <table class="table">
-                        <tr>
-                            <td>Product Name:</td>
-                            <td><strong>{{$name}}</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Product Amount:</td>
-                            <td><strong>{{$amount}}</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Product status:</td>
-                            <td><strong>{{$status ? 'Active' : 'DeActive'}}</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Product Description:</td>
-                            <td><strong>{{$description}}</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Product Stock:</td>
-                            <td><strong>{{$stock}}</strong></td>
-                        </tr>
-                    </table>
-                    
-                </div>
-            </div> --}}
+            </div>           
             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(2)">Atras</button>
             <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" wire:click="thirdStepSubmit">Siguiente</button>
         </div>
@@ -663,7 +632,7 @@
 <script>
     $(document).ready(function() 
     {
-            $('#paisnacimiento').on('change', function() {
+        $('#paisnacimiento').on('change', function() {
                 var pais_id = $(this).val();
                 if(pais_id) {
                     $.ajax({
@@ -674,18 +643,18 @@
                             $('#departamentonacimiento').empty();
                             $('#departamentonacimiento').append('<option value="">Seleccione un departamento</option>');
                             $.each(data, function(index, departamento) {
-                                $('#departamentonacimiento').append('<option value="'+departamento.id+'">'+departamento.nombredepto+'</option>');
-                            });
-                        }
-                    }); 
-                } else {
-                    $('#departamentonacimiento').empty();
-                    $('#municipionacimiento').empty();
-                }
-            });
+                            $('#departamentonacimiento').append('<option value="'+departamento.id+'">'+departamento.nombredepto+'</option>');
+                        });
+                    }
+                }); 
+            } else {
+                $('#departamentonacimiento').empty();
+                $('#municipionacimiento').empty();
+            }
+        });
 
-            // ciudades
-             $('#departamentonacimiento').on('change', function() {
+            // ciudades nacimiento
+            $('#departamentonacimiento').on('change', function() {
                 var depto_id = $(this).val();
                 if(depto_id) {
                     $.ajax({
@@ -704,64 +673,82 @@
                     $('#municipionacimiento').empty();
                 }
             });
+
+
+            // departamento de ubicacion 
+        $('#paisresidencia').on('change', function() 
+        {
+            var pais_id = $(this).val();
+                    if(pais_id) {
+                        $.ajax({
+                            url: '/deptos/'+pais_id,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                $('#departamentoresidencia').empty();
+                                $('#departamentoresidencia').append('<option value="">Seleccione un departamento</option>');
+                                $.each(data, function(index, departamento) {
+                                    $('#departamentoresidencia').append('<option value="'+departamento.id+'">'+departamento.nombredepto+'</option>');
+                                });
+                            }
+                        }); 
+                    } else {
+                        $('#departamentoresidencia').empty();
+                        $('#municipioresidencia').empty();
+                    }
+        });
+
+
+        // ciudades ubicacion
+        $('#departamentoresidencia').on('change', function() 
+        {
+                        var depto_id = $(this).val();
+                        if(depto_id) {
+                            $.ajax({
+                                url: '/ciudades/'+depto_id,
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function(data) {
+                                    $('#municipioresidencia').empty();
+                                    $('#municipioresidencia').append('<option value="">Seleccione una ciudad</option>');
+                                    $.each(data, function(index, ciudad) {
+                                        $('#municipioresidencia').append('<option value="'+ciudad.id+'">'+ciudad.nombreciudad+'</option>');
+                                    });
+                                }
+                            });
+                        } else {
+                            $('#municipioresidencia').empty();
+                        }
+        });
+
+
+
+
     });
-    
+
+
+    function calcularEdad()
+    {
+        var fechaNacimiento = document.getElementById("fechaNacimiento").value;
+        if (fechaNacimiento !== "") {
+            var fechaNac = new Date(fechaNacimiento);
+            var fechaActual = new Date();
+            var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+            if (
+                fechaNac.getMonth() > fechaActual.getMonth() ||
+                (fechaNac.getMonth() === fechaActual.getMonth() && fechaNac.getDate() > fechaActual.getDate())
+            ) {
+                edad--;
+            }
+            document.getElementById("resultadoEdad").value = edad;
+        } else {
+        }
+    }
 </script>
 
-
-
-{{-- 
 <script>
-    const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-    
-    document.getElementById('paisnacimiento').addEventListener('change',(e)=>{
-
-    // function llenardeptos(){
-        alert('ok');
-
-        fetch('deptos',{
-            method : 'POST',
-            body: JSON.stringify({texto : e.target.value}),
-            headers:{
-                'Content-Type': 'application/json',
-                "X-CSRF-Token": csrfToken
-            }
-        }).then(response =>{
-            return response.json()
-        }).then( data =>{
-            var opciones ="<option value=''>Elegir</option>";
-            for (let i in data.lista) {
-               opciones+= '<option value="'+data.lista[i].id+'">'+data.lista[i].nombredepto+'</option>';
-            }
-            document.getElementById("deptos").innerHTML = opciones;
-        }).catch(error =>console.error(error));
-     
-    // }
-        })
-
-    document.getElementById('departamentonacimiento').addEventListener('change',(e)=>{
-        fetch('ciudades',{
-            method : 'POST',
-            body: JSON.stringify({texto : e.target.value}),
-            headers:{
-                'Content-Type': 'application/json',
-                "X-CSRF-Token": csrfToken
-            }
-        }).then(response =>{
-            return response.json()
-        }).then( data =>{
-            var opciones ="<option value=''>Elegir</option>";
-            for (let i in data.lista) {
-               opciones+= '<option value="'+data.lista[i].id+'">'+data.lista[i].nombreciudad+'</option>';
-            }
-            document.getElementById("ciudades").innerHTML = opciones;
-        }).catch(error =>console.error(error));
-    })
-
-</script>    --}}
-
-<script>
-    function mostrarOcultarCampos1() {
+    function mostrarOcultarCampos1() 
+    {
         let encalidad = document.getElementById("encalidad");
         let camposAnonimos = document.getElementById("camposAnonimos");        
         if (encalidad.value === "EN NOMBRE PROPIO" || encalidad.value === ""){
@@ -771,8 +758,8 @@
         }
     }
 
-
-    function mostrarOcultarCampos2() {
+    function mostrarOcultarCampos2() 
+    {
         let tutelaanterior = document.getElementById("tutelaanterior");
         let camposAnonimos1 = document.getElementById("camposAnonimos1");        
         if (tutelaanterior.value === "NO" || tutelaanterior.value === ""){

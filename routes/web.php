@@ -25,12 +25,11 @@ Route::get('wizard', function () {
 
 
 
-// Route::post('/deptos', [App\Livewire\wizard::class, 'deptos']);
-// Route::post('/ciudades', [App\Livewire\wizard::class, 'ciudades']);
 
 
 Route::get('/deptos/{id}', [wizard::class, 'getDepartamentos']);
 Route::get('/ciudades/{id}', [wizard::class, 'getCiudades']);
+Route::get('/comunas/{id}', [wizard::class, 'getComunas']);
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

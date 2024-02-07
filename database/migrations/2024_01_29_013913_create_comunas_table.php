@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('comunas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('ciudad_id');
             $table->unsignedBigInteger('zona_id');
             $table->string('nombrecomuna');
             $table->string('nombrezona');

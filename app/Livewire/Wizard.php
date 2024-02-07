@@ -14,6 +14,7 @@ use App\Models\etnia;
 use App\Models\pais;
 use App\Models\departamento;
 use App\Models\ciudades;
+use App\Models\comunas;
 
 
 
@@ -54,6 +55,12 @@ class Wizard extends Component
         return response()->json($ciudades);
     }
 
+
+    public function getComunas($id)
+    {
+        $comunas = comunas::where('ciudad_id', $id)->get();
+        return response()->json($comunas);
+    }
 
     // public function deptos(Request $request)
     // {

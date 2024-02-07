@@ -722,6 +722,28 @@
         });
 
 
+                // comunas de ubicacion
+                $('#municipioresidencia').on('change', function() 
+        {
+                        var ciudad_id = $(this).val();
+                        if(ciudad_id) {
+                            $.ajax({
+                                url: '/comunas/'+ciudad_id,
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function(data) {
+                                    $('#comunaresidencia').empty();
+                                    $('#comunaresidencia').append('<option value="">Seleccione una comuna</option>');
+                                    $.each(data, function(index, comuna) {
+                                        $('#comunaresidencia').append('<option value="'+comuna.id+'">'+comuna.nombrecomuna+'</option>');
+                                    });
+                                }
+                            });
+                        } else {
+                            $('#comunaresidencia').empty();
+                        }
+        });
+
 
 
     });

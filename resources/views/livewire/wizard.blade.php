@@ -722,7 +722,7 @@
         });
 
 
-                // comunas de ubicacion
+        // comunas de ubicacion
                 $('#municipioresidencia').on('change', function() 
         {
                         var ciudad_id = $(this).val();
@@ -741,6 +741,28 @@
                             });
                         } else {
                             $('#comunaresidencia').empty();
+                        }
+        });
+
+        // barrios de ubicacion
+        $('#comunaresidencia').on('change', function() 
+        {
+                        var comuna_id = $(this).val();
+                        if(comuna_id) {
+                            $.ajax({
+                                url: '/barrios/'+comuna_id,
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function(data) {
+                                    $('#barrioresidencia').empty();
+                                    $('#barrioresidencia').append('<option value="">Seleccione un barrio</option>');
+                                    $.each(data, function(index, barrio) {
+                                        $('#barrioresidencia').append('<option value="'+barrio.id+'">'+barrio.nombrebarrio+'</option>');
+                                    });
+                                }
+                            });
+                        } else {
+                            $('#barrioresidencia').empty();
                         }
         });
 

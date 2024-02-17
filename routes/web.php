@@ -30,6 +30,8 @@ Route::get('wizard', function () {
 Route::get('/deptos/{id}', [wizard::class, 'getDepartamentos']);
 Route::get('/ciudades/{id}', [wizard::class, 'getCiudades']);
 Route::get('/comunas/{id}', [wizard::class, 'getComunas']);
+Route::get('/barrios/{id}', [wizard::class, 'getBarrios']);
+
 // Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

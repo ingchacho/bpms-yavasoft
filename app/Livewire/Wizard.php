@@ -15,6 +15,7 @@ use App\Models\pais;
 use App\Models\departamento;
 use App\Models\ciudades;
 use App\Models\comunas;
+use App\Models\barrios;
 
 
 
@@ -62,6 +63,12 @@ class Wizard extends Component
         return response()->json($comunas);
     }
 
+
+    public function getBarrios($id)
+    {
+        $barrios = barrios::where('comuna_id', $id)->get();
+        return response()->json($barrios);
+    }
     // public function deptos(Request $request)
     // {
     //     if(isset($request->texto)){

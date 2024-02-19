@@ -1,9 +1,10 @@
 <?php
   
 namespace App\Livewire;
-  
+
+use Illuminate\Http\Request;  
 use Livewire\Component;
-use App\Models\Product;
+// use App\Models\Product;
 use App\Models\Tipodocumento;
 use App\Models\identidadgenero;
 use App\Models\nivelacademico;
@@ -16,14 +17,11 @@ use App\Models\departamento;
 use App\Models\ciudades;
 use App\Models\comunas;
 use App\Models\barrios;
-
-
-
   
 class Wizard extends Component
 {
     public $currentStep = 1;
-    public $name, $amount, $description, $status = 1, $stock;
+    // public $name, $amount, $description, $status = 1, $stock;
     public $successMessage = '';
   
     /**
@@ -69,49 +67,7 @@ class Wizard extends Component
         $barrios = barrios::where('comuna_id', $id)->get();
         return response()->json($barrios);
     }
-    // public function deptos(Request $request)
-    // {
-    //     if(isset($request->texto)){
-    //         $departamentos = departamento::wherePais_id($request->texto)->get();
-    //         return response()->json(
-    //             [
-    //                 'lista' => $departamentos,
-    //                 'success' => true
-    //             ]
-    //             );
-    //     }else{
-    //         return response()->json(
-    //             [
-    //                 'success' => false
-    //             ]
-    //             );
-
-    //     }
-    // }
-
-    // public function ciudades(Request $request)
-    // {
-    //     if(isset($request->texto)){
-    //         $ciudades = ciudad::whereDepto_id($request->texto)->get();
-    //         return response()->json(
-    //             [
-    //                 'lista' => $ciudades,
-    //                 'success' => true
-    //             ]
-    //             );
-    //     }else{
-    //         return response()->json(
-    //             [
-    //                 'success' => false
-    //             ]
-    //             );
-
-    //     }
-
-    // }
-
-
-
+  
     /**
      * Write code on Method
      *
@@ -158,17 +114,19 @@ class Wizard extends Component
      *
      * @return response()
      */
-    public function submitForm()
+    public function submitForm(Request $request)
     {
-        Product::create([
-            'name' => $this->name,
-            'amount' => $this->amount,
-            'description' => $this->description,
-            'stock' => $this->stock,
-            'status' => $this->status,            
-        ]);
+
+        dd($request);
+        // Product::create([
+        //     'name' => $this->name,
+        //     'amount' => $this->amount,
+        //     'description' => $this->description,
+        //     'stock' => $this->stock,
+        //     'status' => $this->status,            
+        // ]);
   
-        $this->successMessage = 'Product Created Successfully.';
+        $this->successMessage = 'Información registrada con exito';
   
         $this->clearForm();
   
@@ -192,10 +150,10 @@ class Wizard extends Component
      */
     public function clearForm()
     {
-        $this->name = '';
-        $this->amount = '';
-        $this->description = '';
-        $this->stock = '';
-        $this->status = 1;
+        // $this->name = '';
+        // $this->amount = '';
+        // $this->description = '';
+        // $this->stock = '';
+        // $this->status = 1;
     }
 }

@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\atencionesController;
+
 use App\Livewire\Wizard;
 
 
@@ -26,13 +29,21 @@ Route::get('wizard', function () {
 
 
 
-
 Route::get('/deptos/{id}', [wizard::class, 'getDepartamentos']);
 Route::get('/ciudades/{id}', [wizard::class, 'getCiudades']);
 Route::get('/comunas/{id}', [wizard::class, 'getComunas']);
 Route::get('/barrios/{id}', [wizard::class, 'getBarrios']);
 
-// Auth::routes();
+// Route::controller(atencionesController::class)->group(function () 
+// {
+// 	Route::post('/atenciones', 'store')->name('atenciones');
+// });
+
+// Route::post('atenciones', [atencionesController::class, 'store']);//->name('atenciones');
+
+Route::post('/atenciones', [atencionesController::class, 'store'])->name('atenciones.store');
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();

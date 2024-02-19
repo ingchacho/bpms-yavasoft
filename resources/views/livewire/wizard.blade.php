@@ -5,7 +5,7 @@
             {{ $successMessage }}
         </div>
     @endif
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
     <div class="stepwizard">
         <div class="stepwizard-row setup-panel">
@@ -31,6 +31,9 @@
             </div>
         </div>
     </div>
+
+    <form action="{{ route('atenciones.store') }}" method="post" id="formatenciones" name="formatenciones">
+        @csrf
         {{-- inf personal --}}
         <div class="row setup-content {{ $currentStep != 1 ? 'displayNone' : '' }}" id="step-1">    
             {{-- <div class="col-12">
@@ -137,24 +140,6 @@
             </div>       
             <div class="col-xs-12">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="title">Product Name:</label>
-                        <input type="text" wire:model="name" class="form-control" id="taskTitle">
-                        @error('name') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Product Amount:</label>
-                        <input type="text" wire:model="amount" class="form-control" id="productAmount"/>
-                        @error('amount') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-      
-                    <div class="form-group">
-                        <label for="description">Product Description:</label>
-                        <textarea type="text" wire:model="description" class="form-control" id="taskDescription">{{{ $description ?? '' }}}</textarea>
-                        @error('description') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-      
                     <button class="btn btn-primary nextBtn btn-lg pull-right" wire:click="firstStepSubmit" type="button" >Siguiente</button>
                 </div>
             </div>
@@ -626,8 +611,10 @@
                 </div>
 
             <button class="btn btn-danger nextBtn btn-lg pull-right" type="button" wire:click="back(4)">Atras</button>
-            <button class="btn btn-success btn-lg pull-right" wire:click="submitForm" type="button">Finish!</button>
+            {{-- <button class="btn btn-success btn-lg pull-right" wire:click="submitForm" type="button">Enviar solicitud</button> --}}
+            <input type="submit" class="btn btn-success" value="Enviar">
         </div>
+    </form>        
 </div>
 <script>
     $(document).ready(function() 
